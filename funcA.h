@@ -3,7 +3,7 @@
 
 class FuncA {
 public:
-    double calculate(double x, int n);  // Обчислює ряд для n елементів
+    double calculate(double x, int n);
 };
 
 #endif
