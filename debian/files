@@ -1,0 +1,3 @@
+my-program-dbgsym_1.0-1_amd64.ddeb debug optional automatic=yes
+my-program_1.0-1_amd64.buildinfo utils optional
+my-program_1.0-1_amd64.deb utils optional
