@@ -1,0 +1,11 @@
+Package: my-program
+Version: 1.0-1
+Architecture: amd64
+Maintainer: Founder <founder@unknown>
+Installed-Size: 24
+Depends: libc6 (>= 2.34), libstdc++6 (>= 4.4)
+Section: utils
+Priority: optional
+Homepage: https://example.com
+Description: My Program
+ A simple example program.

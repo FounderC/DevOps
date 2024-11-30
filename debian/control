@@ -1,0 +1,13 @@
+Source: my-program
+Section: utils
+Priority: optional
+Maintainer: Founder <founder@unknown>
+Build-Depends: debhelper (>= 12)
+Standards-Version: 4.5.0
+Homepage: https://example.com
+
+Package: my-program
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: My Program
+ A simple example program.

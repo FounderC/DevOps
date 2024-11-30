@@ -1,0 +1,17 @@
+19f05442acc205662736baba5a84045e  ./Makefile.am
+b090c5891571c820e91d345a9551af44  ./install-sh
+e21396284fb400b2455966879eb853f0  ./configure.ac
+92a5317e5a422b5d30cdbd282fc747c0  ./my_program-1.0.tar.gz
+4fff3777042f5e672272685013f97cd6  ./main.cpp
+0fa8c7722a2ae4037e5b4657bcdf90e9  ./Makefile.in
+a6e90a4ae058a35202a75e2eaaf88d83  ./aclocal.m4
+dc01874d6946b9f345365dcb8881b7e4  ./build.yml
+19f05442acc205662736baba5a84045e  ./DevOps/Makefile.am
+e21396284fb400b2455966879eb853f0  ./DevOps/configure.ac
+4fff3777042f5e672272685013f97cd6  ./DevOps/main.cpp
+dfe7b13c85d59531c0d5e988b87a153f  ./DevOps/.github/workflows/build.yml
+ccddcaf66b3cd7297e3d96fe72054222  ./DevOps/Makefile
+dfe7b13c85d59531c0d5e988b87a153f  ./.github/workflows/build.yml
+086b8da5a251be943f06d3a927bbe60e  ./missing
+95c1d6560fead8dc2442e4d46d9b77d5  ./configure
+6ecafe15a6088eb7a2f4f2aadbb240ce  ./depcomp
