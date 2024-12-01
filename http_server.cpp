@@ -1,36 +1,40 @@
-#include "cpp-httplib/httplib.h"
+#include <iostream>
+#include <chrono>
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include <chrono>
-#include <iostream>
+#include "cpp-httplib/httplib.h"
 
-class TrigonometricFunctions {
-public:
-    static std::vector<double> calculateTrigonometricFunctions(int num_elements) {
-        std::vector<double> values;
-        for (int i = 0; i < num_elements; ++i) {
-            values.push_back(std::sin(i * M_PI / 180.0));
-        }
-        return values;
-    }
-};
+double calculate(double x) {
+    return sin(x);
+}
 
 int main() {
     httplib::Server svr;
 
-    svr.Get("/calculate", [](const httplib::Request& req, httplib::Response& res) {
-        int num_elements = 1000;
-        std::vector<double> values = TrigonometricFunctions::calculateTrigonometricFunctions(num_elements);
+    svr.Get("/calculate", [](const httplib::Request &req, httplib::Response &res) {
+        const int array_size = 100000;
+        const int sorting_cycles = 100;
 
-        auto start_time = std::chrono::high_resolution_clock::now();
-        std::sort(values.begin(), values.end());
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+        std::vector<double> values(array_size);
+        for (int i = 0; i < array_size; ++i) {
+            values[i] = calculate(i * 0.01);
+        }
 
-        res.set_content("Calculation time: " + std::to_string(duration.count()) + " ms", "text/plain");
+        auto start = std::chrono::high_resolution_clock::now();
+
+        for (int i = 0; i < sorting_cycles; ++i) {
+            std::sort(values.begin(), values.end());
+        }
+
+        auto end = std::chrono::high_resolution_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+        res.set_content("Calculation completed in " + std::to_string(elapsed) + " seconds", "text/plain");
     });
+	std::cout << "HTTP server is running on http://localhost:8080" << std::endl;
+	svr.listen("0.0.0.0", 8080);
 
-    svr.listen("0.0.0.0", 8080);
-    return 0;
+	return 0;
 }
+

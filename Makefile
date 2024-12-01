@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = my_program$(EXEEXT)
+bin_PROGRAMS = my_program$(EXEEXT) http_server$(EXEEXT)
 check_PROGRAMS = test$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -102,6 +102,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
+am_http_server_OBJECTS = http_server.$(OBJEXT)
+http_server_OBJECTS = $(am_http_server_OBJECTS)
+http_server_LDADD = $(LDADD)
 am_my_program_OBJECTS = main.$(OBJEXT)
 my_program_OBJECTS = $(am_my_program_OBJECTS)
 my_program_LDADD = $(LDADD)
@@ -123,7 +126,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/main.Po ./$(DEPDIR)/test.Po
+am__depfiles_remade = ./$(DEPDIR)/http_server.Po ./$(DEPDIR)/main.Po \
+	./$(DEPDIR)/test.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -138,8 +142,9 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(my_program_SOURCES) $(test_SOURCES)
-DIST_SOURCES = $(my_program_SOURCES) $(test_SOURCES)
+SOURCES = $(http_server_SOURCES) $(my_program_SOURCES) $(test_SOURCES)
+DIST_SOURCES = $(http_server_SOURCES) $(my_program_SOURCES) \
+	$(test_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -273,6 +278,8 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
 my_program_SOURCES = main.cpp
+http_server_SOURCES = http_server.cpp
+AM_CPPFLAGS = -Icpp-httplib
 test_SOURCES = test.cpp
 all: all-am
 
@@ -357,6 +364,10 @@ clean-binPROGRAMS:
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
+http_server$(EXEEXT): $(http_server_OBJECTS) $(http_server_DEPENDENCIES) $(EXTRA_http_server_DEPENDENCIES) 
+	@rm -f http_server$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(http_server_OBJECTS) $(http_server_LDADD) $(LIBS)
+
 my_program$(EXEEXT): $(my_program_OBJECTS) $(my_program_DEPENDENCIES) $(EXTRA_my_program_DEPENDENCIES) 
 	@rm -f my_program$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(my_program_OBJECTS) $(my_program_LDADD) $(LIBS)
@@ -371,6 +382,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/http_server.Po # am--include-marker
 include ./$(DEPDIR)/main.Po # am--include-marker
 include ./$(DEPDIR)/test.Po # am--include-marker
 
@@ -669,7 +681,8 @@ clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f ./$(DEPDIR)/main.Po
+		-rm -f ./$(DEPDIR)/http_server.Po
+	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/test.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -718,7 +731,8 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f ./$(DEPDIR)/main.Po
+		-rm -f ./$(DEPDIR)/http_server.Po
+	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/test.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
